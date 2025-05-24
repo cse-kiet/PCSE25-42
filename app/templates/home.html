@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+        }
+
+        function showError(error) {
+            alert("Error fetching location: " + error.message);
+        }
+
+        window.onload = function() {
+            if (sessionStorage.getItem("latitude") && sessionStorage.getItem("longitude")) {
+                document.getElementById("latitude").value = sessionStorage.getItem("latitude");
+                document.getElementById("longitude").value = sessionStorage.getItem("longitude");
+            }
+        };
+
+        function storeLocation() {
+            sessionStorage.setItem("latitude", document.getElementById("latitude").value);
+            sessionStorage.setItem("longitude", document.getElementById("longitude").value);
+        }
+    </script>
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+    <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <h2 style="font-size: 28px; margin-bottom: 20px;">Weather Forecast</h2>
+        <form method="POST" onsubmit="storeLocation()">
+            {% csrf_token %}
+            <label for="latitude" style="font-size: 20px;">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" style="width: 80%; padding: 10px; font-size: 18px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <br>
+            <label for="longitude" style="font-size: 20px;">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" style="width: 80%; padding: 10px; font-size: 18px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <br>
+            <button type="button" onclick="getLocation()" style="width: 80%; padding: 12px; font-size: 18px; margin-top: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Use Current Location</button>
+            <br>
+            <button type="submit" style="width: 80%; padding: 12px; font-size: 18px; margin-top: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Get Temperature</button>
+        </form>
+        
+        {% if temperature %}
+            <h3 style="font-size: 24px; margin-top: 20px; color: #333;">Temperature: {{ temperature }} °C</h3>
+        {% endif %}
+        
+        {% if error %}
+            <p style="color:red; font-size: 18px;">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

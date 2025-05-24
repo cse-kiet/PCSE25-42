@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Forecasting - Login</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet"/>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    header {
+      background-color: #212529;
+      color: white;
+      padding: 1rem 2rem;
+    }
+
+    .logo a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .openbtn {
+      background: none;
+      border: none;
+    }
+
+    .sidepanel {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      right: 0;
+      background-color: #f1f1f1;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidepanel a {
+      padding: 10px 30px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #212529;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidepanel a:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 36px;
+    }
+
+    .form-container {
+      width: 400px;
+      border-radius: 8px;
+      padding: 30px;
+      margin: 5rem auto;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .form-container h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .input-field {
+      position: relative;
+      border-bottom: 2px solid #ccc;
+      margin: 15px 0;
+    }
+
+    .input-field label {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 16px;
+      pointer-events: none;
+      transition: 0.15s ease;
+    }
+
+    .input-field input {
+      width: 100%;
+      height: 40px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .input-field input:focus~label,
+    .input-field input:valid~label {
+      font-size: 0.8rem;
+      top: 10px;
+      transform: translateY(-120%);
+    }
+
+    button {
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 16px;
+      border: 2px solid transparent;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 30px;
+      color: #fff;
+    }
+
+    .register a {
+      color: #efefef;
+      text-decoration: none;
+    }
+
+    .register a:hover {
+      text-decoration: underline;
+    }
+
+    /* Background image */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("https://c0.wallpaperflare.com/preview/416/337/233/weather-news-reporter-man.jpg"), #000;
+      background-position: center;
+      background-size: cover;
+      filter: blur(0px);
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidepanel -->
+<div id="mySidepanel" class="sidepanel">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/login">Login</a>
+  <a href="/registration">Registration</a>
+</div>
+
+<!-- Header -->
+<header class="d-flex justify-content-between align-items-center px-4 py-3 bg-dark">
+  <div class="logo">
+    <a href="/" class="text-white text-decoration-none fs-4">Weather Forecasting</a>
+  </div>
+
+  <div class="d-flex align-items-center">
+    <div class="nav-links d-none d-md-block me-3">
+      <a href="/login" class="text-white me-3">Login</a>
+      <a href="/registration" class="text-white">Register</a>
+    </div>
+    <button class="openbtn" onclick="openNav()">
+      <i class="fa fa-bars fa-2x text-white"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Login Form -->
+<div class="form-container">
+  <form id="login-form" onsubmit="return handleLogin(event)">
+    <h2>Login</h2>
+    <div class="input-field">
+      <input type="email" id="email" required>
+      <label>Enter your email</label>
+    </div>
+    <div class="input-field">
+      <input type="password" id="password" required>
+      <label>Enter your password</label>
+    </div>
+    <button type="submit">Login</button>
+    <div class="register">
+      <p>Don't have an account? <a href="/registration">Register</a></p>
+    </div>
+  </form>
+</div>
+
+<!-- JS -->
+<script>
+  function openNav() {
+    document.getElementById("mySidepanel").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidepanel").style.width = "0";
+  }
+
+  function handleLogin(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Optional: Add login validation here
+
+    // After successful login, redirect to home/dashboard
+    window.location.href = "userhome";
+  }
+</script>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
